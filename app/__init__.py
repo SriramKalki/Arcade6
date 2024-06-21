@@ -2,7 +2,6 @@ from flask import Flask
 from .config import Config
 from .models import db
 from flask_migrate import Migrate
-from .routes import main
 
 def create_app():
     app = Flask(__name__)
@@ -11,6 +10,10 @@ def create_app():
     db.init_app(app)
     migrate = Migrate(app, db)
 
+    from .routes import main
+    from .api import api_bp
+
     app.register_blueprint(main)
+    app.register_blueprint(api_bp, url_prefix='/api')
 
     return app
