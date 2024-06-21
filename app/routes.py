@@ -19,3 +19,22 @@ def add_note():
         flash('Note added successfully!', 'success')
         return redirect(url_for('main.index'))
     return render_template('add_note.html')
+
+@main.route('/edit/<int:note_id>', methods=['GET', 'POST'])
+def edit_note(note_id):
+    note = Note.query.get(note_id)
+    if request.method == 'POST':
+        note.title = request.form['title']
+        note.content = request.form['content']
+        db.session.commit()
+        flash('Note updated successfully!', 'success')
+        return redirect(url_for('main.index'))
+    return render_template('edit_note.html', note=note)
+
+@main.route('/delete/<int:note_id>')
+def delete_note(note_id):
+    note = Note.query.get(note_id)
+    db.session.delete(note)
+    db.session.commit()
+    flash('Note deleted successfully!', 'success')
+    return redirect(url_for('main.index'))

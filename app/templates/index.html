@@ -7,6 +7,8 @@
     <li class="post">
         <strong>{{ note.title }}</strong><br>
         {{ note.content }}<br>
+        <a href="{{ url_for('main.edit_note', note_id=note.id) }}" class="button edit-button">Edit</a>
+        <a href="{{ url_for('main.delete_note', note_id=note.id) }}" class="button delete-button">Delete</a>
     </li>
     {% endfor %}
 </ul>
